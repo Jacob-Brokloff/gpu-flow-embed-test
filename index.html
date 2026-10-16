@@ -1840,8 +1840,8 @@ if(select.value===&#x27;nv&#x27;){
  fabric(270,166,420);label(480,392,&#x27;125 GB weights / GPU&#x27;);
 }else if(select.value===&#x27;vllm&#x27;){
  const users=[370,480,590];users.forEach((x,i)=&gt;box(x-38,12,76,34,&#x27;User &#x27;+String.fromCharCode(65+i)));
- box(25,115,900,430,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(131,133,&#x27;Kubernetes&#x27;);cps();
- box(275,145,430,380,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(490,169,&#x27;GPU worker · one replica&#x27;);
+ box(25,115,900,430,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(131,100,&#x27;Kubernetes&#x27;);cps();
+ box(275,145,430,380,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(490,505,&#x27;GPU worker · one replica&#x27;);
  box(400,195,180,54,&#x27;vLLM&#x27;,&#x27;Batch + KV cache&#x27;);
  // One shared input trunk, rather than three overlaid copies.
  line(&#x27;M 370 46 V 72 H 480 M 590 46 V 72 H 480 M 480 46 V 195&#x27;);
@@ -1861,8 +1861,8 @@ if(select.value===&#x27;nv&#x27;){
  dot(&#x27;M 580 222 H 760 V 90 H 620 V 2 H 400 V 12&#x27;,&#x27;token&#x27;,1.6,4);
 }else{
  box(442,8,96,34,&#x27;Clients&#x27;);
- box(25,105,910,520,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(131,125,&#x27;Kubernetes&#x27;);cps();
- box(330,130,350,160,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(505,150,&#x27;CPU worker · llm-d&#x27;);
+ box(25,105,910,540,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(131,125,&#x27;Kubernetes&#x27;);cps();
+ box(330,130,350,160,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(505,286,&#x27;CPU worker · llm-d&#x27;);
  box(410,170,180,42,&#x27;Gateway / proxy&#x27;);box(410,240,180,32,&#x27;Endpoint picker&#x27;);
  flow(&#x27;M 480 42 V 170&#x27;,&#x27;request&#x27;,0,2);
  flow(&#x27;M 462 212 V 240&#x27;,&#x27;request&#x27;,.4,1.4);flow(&#x27;M 538 240 V 212&#x27;,&#x27;token&#x27;,.6,1.4);
@@ -1872,7 +1872,7 @@ if(select.value===&#x27;nv&#x27;){
  line(&#x27;M 190 385 V 350 H 870 V 191 H 590 M 490 385 V 350 M 790 385 V 350&#x27;,&#x27;token&#x27;);
  flow(&#x27;M 520 170 V 42&#x27;,&#x27;token&#x27;,1,2);
  for(let i=0;i&lt;3;i++){
-  const x=40+i*300,cx=x+115;box(x,365,280,240,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(x+140,383,&#x27;GPU worker &#x27;+String.fromCharCode(65+i));
+  const x=40+i*300,cx=x+115;box(x,365,280,260,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(x+140,615,&#x27;GPU worker &#x27;+String.fromCharCode(65+i));
   box(x+70,395,140,36,&#x27;vLLM · &#x27;+String.fromCharCode(65+i));
   // Paths end at replica input / output ports, not through labels.
   line(`M ${cx} 385 V 395`);line(`M ${cx+35} 395 V 385`,&#x27;token&#x27;);
