@@ -1825,7 +1825,7 @@ const box=(x,y,bw,bh,t=&#x27;&#x27;,sub=&#x27;&#x27;,cls=&#x27;node&#x27;)=&gt;{
 const line=(d,kind=&#x27;request&#x27;)=&gt;out+=`&lt;path class=&quot;${kind===&#x27;nv&#x27;?&#x27;nvpipe&#x27;:kind===&#x27;token&#x27;?&#x27;returnpipe&#x27;:&#x27;pipe&#x27;}&quot; d=&quot;${d}&quot;/&gt;`;
 const dot=(d,kind=&#x27;request&#x27;,delay=0,dur=3)=&gt;{out+=`&lt;circle class=&quot;${kind}&quot; r=&quot;4&quot; opacity=&quot;0&quot;&gt;&lt;animate attributeName=&quot;opacity&quot; values=&quot;0;1;1;0&quot; keyTimes=&quot;0;.02;.96;1&quot; dur=&quot;${dur}s&quot; begin=&quot;${delay}s&quot; repeatCount=&quot;indefinite&quot;/&gt;&lt;animateMotion dur=&quot;${dur}s&quot; begin=&quot;${delay}s&quot; repeatCount=&quot;indefinite&quot; path=&quot;${d}&quot;/&gt;&lt;/circle&gt;`;};
 const flow=(d,kind=&#x27;request&#x27;,delay=0,dur=3)=&gt;{line(d,kind);dot(d,kind,delay,dur);};
-const cps=()=&gt;{label(131,155,&#x27;Control plane&#x27;);for(let i=0;i&lt;3;i++)box(44+i*60,170,54,32,&#x27;CP &#x27;+(i+1));};
+const cps=()=&gt;{label(131,164,&#x27;Control plane&#x27;);for(let i=0;i&lt;3;i++)box(44+i*60,180,54,32,&#x27;CP &#x27;+(i+1));};
 // A twelve-second cycle makes batching phases and request identity visible.
 function timed(d,client,start,duration){
  const a=start/12,b=(start+duration)/12;
