@@ -1825,7 +1825,6 @@ const box=(x,y,bw,bh,t=&#x27;&#x27;,sub=&#x27;&#x27;,cls=&#x27;node&#x27;)=&gt;{
 const line=(d,kind=&#x27;request&#x27;)=&gt;out+=`&lt;path class=&quot;${kind===&#x27;nv&#x27;?&#x27;nvpipe&#x27;:kind===&#x27;token&#x27;?&#x27;returnpipe&#x27;:&#x27;pipe&#x27;}&quot; d=&quot;${d}&quot;/&gt;`;
 const dot=(d,kind=&#x27;request&#x27;,delay=0,dur=3)=&gt;{out+=`&lt;circle class=&quot;${kind}&quot; r=&quot;4&quot; opacity=&quot;0&quot;&gt;&lt;animate attributeName=&quot;opacity&quot; values=&quot;0;1;1;0&quot; keyTimes=&quot;0;.02;.96;1&quot; dur=&quot;${dur}s&quot; begin=&quot;${delay}s&quot; repeatCount=&quot;indefinite&quot;/&gt;&lt;animateMotion dur=&quot;${dur}s&quot; begin=&quot;${delay}s&quot; repeatCount=&quot;indefinite&quot; path=&quot;${d}&quot;/&gt;&lt;/circle&gt;`;};
 const flow=(d,kind=&#x27;request&#x27;,delay=0,dur=3)=&gt;{line(d,kind);dot(d,kind,delay,dur);};
-const cps=()=&gt;{label(131,164,&#x27;Control plane&#x27;);for(let i=0;i&lt;3;i++)box(44+i*60,180,54,32,&#x27;CP &#x27;+(i+1));};
 // Allow slower GPU trips without changing client or NVLink dot speeds.
 const cycle=select.value===&#x27;vllm&#x27;?18.5:12;
 function timed(d,client,start,duration){
@@ -1858,13 +1857,12 @@ if(select.value===&#x27;nv&#x27;){
  fabric(270,166,420);label(480,392,&#x27;125 GB weights / GPU&#x27;);
 }else if(select.value===&#x27;vllm&#x27;){
  clients();
- box(25,145,900,455,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(131,132,&#x27;Kubernetes&#x27;);cps();
  box(260,190,460,390,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(490,566,&#x27;GPU worker&#x27;);
  box(390,205,200,90,&#x27;&#x27;,&#x27;&#x27;,&#x27;node&#x27;);label(490,226,&#x27;vLLM&#x27;);label(490,244,&#x27;Continuous batching&#x27;,&#x27;secondary&#x27;);
  // Separate client input ports keep the three incoming paths from crossing.
  const clientX=[370,480,590],ports=[410,480,550];
- clientX.forEach((x,i)=&gt;line(`M ${x} 94 V ${112+i*12} H ${ports[i]} V 205`));
- [0,3,6.5].forEach((t,i)=&gt;timed(`M ${clientX[i]} 94 V ${112+i*12} H ${ports[i]} V 205`,i,t,.8));
+ clientX.forEach((x,i)=&gt;line(`M ${x} 94 V 124 H ${ports[i]} V 205`));
+ [0,3,6.5].forEach((t,i)=&gt;timed(`M ${clientX[i]} 94 V 124 H ${ports[i]} V 205`,i,t,.8));
  function visible(start,end){return `&lt;animate attributeName=&quot;opacity&quot; values=&quot;0;0;1;1;0;0&quot; keyTimes=&quot;0;${Math.max(.0001,start/cycle)};${start/cycle+.001};${end/cycle-.001};${end/cycle};1&quot; dur=&quot;${cycle}s&quot; repeatCount=&quot;indefinite&quot;/&gt;`;}
  const slots=[462,490,518];
  [[.8,6.9],[3.8,10.2],[7.3,16.6]].forEach(([start,end],i)=&gt;{
@@ -1898,8 +1896,7 @@ if(select.value===&#x27;nv&#x27;){
  });
 }else{
  clients();
- [370,480,590].forEach((x,i)=&gt;{const d=`M ${x} 94 V ${112+i*12} H ${[430,480,530][i]} V 170`;line(d);timed(d,i,i*.3,1.5);});
- box(25,105,910,540,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(131,125,&#x27;Kubernetes&#x27;);cps();
+ [370,480,590].forEach((x,i)=&gt;{const d=`M ${x} 94 V 124 H ${[430,480,530][i]} V 170`;line(d);timed(d,i,i*.3,1.5);});
  box(330,130,350,160,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(505,286,&#x27;CPU worker · llm-d&#x27;);
  box(410,170,180,42,&#x27;Gateway / proxy&#x27;);box(410,240,180,32,&#x27;Endpoint picker&#x27;);
 
