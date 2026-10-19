@@ -1841,8 +1841,8 @@ function batch(d,start,duration,members=[0,1,2]){
  members.forEach((i,j)=&gt;out+=`&lt;circle class=&quot;client-${i}&quot; cx=&quot;${(j-(members.length-1)/2)*9}&quot; cy=&quot;0&quot; r=&quot;3.5&quot;/&gt;`);
  out+=&#x27;&lt;/g&gt;&#x27;;
 }
-function clients(){
- [370,480,590].forEach((x,i)=&gt;{box(x-46,60,92,34);label(x+8,82,&#x27;Client &#x27;+String.fromCharCode(65+i));out+=`&lt;circle class=&quot;client-${i}&quot; cx=&quot;${x-32}&quot; cy=&quot;77&quot; r=&quot;3.5&quot;/&gt;`;});
+function clients(positions=[370,480,590]){
+ positions.forEach((x,i)=&gt;{box(x-46,60,92,34);label(x+8,82,&#x27;Client &#x27;+String.fromCharCode(65+i));out+=`&lt;circle class=&quot;client-${i}&quot; cx=&quot;${x-32}&quot; cy=&quot;77&quot; r=&quot;3.5&quot;/&gt;`;});
 }
 // Eight explicit GPUs surround a shared NVLink/NVSwitch fabric.
 function fabric(x,y,width,compact=false,requests=true,client=null){
@@ -1860,13 +1860,13 @@ if(select.value===&#x27;nv&#x27;){
  box(240,110,480,310,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(480,137,&#x27;GPU server · one model&#x27;);
  fabric(270,166,420);label(480,392,&#x27;125 GB weights / GPU&#x27;);
 }else if(select.value===&#x27;vllm&#x27;){
- clients();
+ clients([380,490,600]);
  box(260,190,460,390,&#x27;&#x27;,&#x27;&#x27;,&#x27;group&#x27;);label(490,566,&#x27;GPU worker&#x27;);
- box(390,205,200,90,&#x27;&#x27;,&#x27;&#x27;,&#x27;node&#x27;);label(490,226,&#x27;vLLM&#x27;);label(490,244,&#x27;Continuous batching&#x27;,&#x27;secondary&#x27;);
+ box(334,205,312,90,&#x27;&#x27;,&#x27;&#x27;,&#x27;node&#x27;);label(490,226,&#x27;vLLM&#x27;);label(490,244,&#x27;Continuous batching&#x27;,&#x27;secondary&#x27;);
  // Separate client input ports keep the three incoming paths from crossing.
- const clientX=[370,480,590],ports=[410,480,550];
- clientX.forEach((x,i)=&gt;line(`M ${x} 94 V 124 H ${ports[i]} V 205`));
- [0,3,6.5].forEach((t,i)=&gt;timed(`M ${clientX[i]} 94 V 124 H ${ports[i]} V 205`,i,t,.8));
+ const clientX=[380,490,600];
+ clientX.forEach(x=&gt;line(`M ${x} 94 V 205`));
+ [0,3,6.5].forEach((t,i)=&gt;timed(`M ${clientX[i]} 94 V 205`,i,t,.8));
  function visible(start,end){return `&lt;animate attributeName=&quot;opacity&quot; values=&quot;0;0;1;1;0;0&quot; keyTimes=&quot;0;${Math.max(.0001,start/cycle)};${start/cycle+.001};${end/cycle-.001};${end/cycle};1&quot; dur=&quot;${cycle}s&quot; repeatCount=&quot;indefinite&quot;/&gt;`;}
  const slots=[462,490,518];
  [[.8,6.9],[3.8,10.2],[7.3,16.6]].forEach(([start,end],i)=&gt;{
@@ -1883,9 +1883,9 @@ if(select.value===&#x27;nv&#x27;){
  centers.forEach(cx=&gt;{line(`M ${cx} 328 V 355`);line(`M ${cx} 525 V 513`);});
  fabric(305,355,370,false,false);
  // Logical executor return: connected to the replica boundary, never to NVSwitch.
- const resultPath=&#x27;M 295 520 H 280 V 245 H 390&#x27;;
+ const resultPath=&#x27;M 295 434 H 280 V 245 H 334&#x27;;
  out+=`&lt;path class=&quot;pipe&quot; stroke-dasharray=&quot;4 5&quot; d=&quot;${resultPath}&quot;/&gt;`;
- line(&#x27;M 590 245 H 760 V 15 H 370 M 370 15 V 60 M 480 15 V 60 M 590 15 V 60&#x27;,&#x27;token&#x27;);
+ line(&#x27;M 646 245 H 760 V 15 H 380 M 380 15 V 60 M 490 15 V 60 M 600 15 V 60&#x27;,&#x27;token&#x27;);
 
  // Each iteration changes batch membership. Streamed output overlaps later work.
  [[1,[0]],[4.2,[0,1]],[7.5,[1,2]],[10.7,[2]],[13.9,[2]]].forEach(([t,members])=&gt;{
@@ -1896,7 +1896,7 @@ if(select.value===&#x27;nv&#x27;){
    batch(`M ${cx} 468 V 446`,t+1.5,.3,members);
   });
   batch(resultPath,t+1.8,.9,members);
-  members.forEach(i=&gt;timed(`M 590 245 H 760 V 15 H ${clientX[i]} V 60`,i,t+2.7,1.3));
+  members.forEach(i=&gt;timed(`M 646 245 H 760 V 15 H ${clientX[i]} V 60`,i,t+2.7,1.3));
  });
 }else{
  clients();
